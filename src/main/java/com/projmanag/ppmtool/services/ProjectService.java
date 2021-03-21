@@ -40,5 +40,18 @@ public class ProjectService {
 		
 	}
 	
+	public void deleteProjectByIdentifier(String projectId) {
+		
+		//prima di eliminarlo lo cerco nel DB
+		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());	
+		//se non lo trovo notifico il Client
+		if(project ==null) {
+			throw new ProjectIdException("Cannot DELETE, Poject ID '"+projectId+"' doesn't exists");
+		}	
+		//cancello
+		projectRepository.delete(project);			
+		
+	}
+	
 
 }
