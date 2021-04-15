@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import com.projmanag.ppmtool.services.ProjectService;
 
 @RestController
 @RequestMapping("/api/project")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProjectController {
 	
 	@Autowired
@@ -32,6 +33,7 @@ public class ProjectController {
 	@PostMapping("")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
 		
+		//check if there are errors and only in that case return the errors
 		ResponseEntity<?> errorMap = mapValidatinErrorService.MapValidationService(result);		
 		if(errorMap!= null ) return errorMap;	
 		
