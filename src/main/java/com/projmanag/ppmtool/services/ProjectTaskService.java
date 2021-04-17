@@ -94,4 +94,25 @@ public class ProjectTaskService {
 		return projectTaskRepository.findByProjectSequence(pt_id);
 	}
 	
+	public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String pt_id ) {
+		
+		//metodo di questa stessa classe, sfruttiamo la sua Validazione per verificare i 3 casi di non valido
+		/*a. Verificare che il Backlog/Project esista
+		b. Verificare che il Project Task esista
+		c. Verificare che il Project Task cercato sia associato al Backlog passato nell'URL*/
+		ProjectTask projectTask = findPTByProjectSquence(backlog_id, pt_id);
+		
+		projectTask = updatedTask;		
+		
+		return projectTaskRepository.save(projectTask);
+	}
+	
+	public void deletePTByProjectSequence ( String backlog_id, String pt_id) {
+		
+		//come sopra
+		ProjectTask projectTask = findPTByProjectSquence(backlog_id, pt_id);
+		
+		projectTaskRepository.delete(projectTask);		
+	}
+	
 }
