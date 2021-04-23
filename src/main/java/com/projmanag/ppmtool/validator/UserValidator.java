@@ -27,7 +27,7 @@ public class UserValidator implements Validator{
 
         }
 
-        //confirmPassword
+        //confirmPassword ok
 		
 	}
 
