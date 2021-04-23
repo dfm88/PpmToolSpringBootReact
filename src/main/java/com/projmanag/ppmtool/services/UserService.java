@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.projmanag.ppmtool.domain.User;
+import com.projmanag.ppmtool.exceptions.UsernameAlreadyExistsException;
 import com.projmanag.ppmtool.repositories.UserRepository;
 
 @Service
@@ -17,14 +18,22 @@ public class UserService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
  	public User saveUser (User newUser){
-	  //encrypt user password
-      newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+      
+      try {    	  
+    	  //encrypt user password
+    	  newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));	
+    	  //Username has to be unique (exception) --line to make the Exception happens--
+    	  newUser.setUsername(newUser.getUsername());
+    	  // Make sure that password and confirmPassword match
+          // We don't persist or show the confirmPassword
+          return userRepository.save(newUser);
+      } catch (Exception e) {
+    	  throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists");		
+      }
 
-      //Username has to be unique (exception)
+      
 
-        // Make sure that password and confirmPassword match
-        // We don't persist or show the confirmPassword
-      return userRepository.save(newUser);
+        
     }
 
 }
