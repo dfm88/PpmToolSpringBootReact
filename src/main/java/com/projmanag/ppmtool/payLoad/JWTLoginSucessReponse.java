@@ -1,4 +1,4 @@
-package com.projmanag.ppmtool.PayLoad;
+package com.projmanag.ppmtool.payLoad;
 
 public class JWTLoginSucessReponse {
     private boolean success;
