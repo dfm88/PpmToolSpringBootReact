@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projmanag.ppmtool.PayLoad.JWTLoginSucessReponse;
-import com.projmanag.ppmtool.PayLoad.LoginRequest;
 import com.projmanag.ppmtool.domain.User;
+import com.projmanag.ppmtool.payLoad.JWTLoginSucessReponse;
+import com.projmanag.ppmtool.payLoad.LoginRequest;
 import com.projmanag.ppmtool.security.JWTTokenProvider;
 import com.projmanag.ppmtool.security.SecurityConstants;
 import com.projmanag.ppmtool.services.MapValidationErrorService;

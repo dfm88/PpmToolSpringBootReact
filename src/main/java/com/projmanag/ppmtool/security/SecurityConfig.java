@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.projmanag.ppmtool.services.CustomUserDetailsService;
 
@@ -34,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter() { return new JWTAuthenticationFilter();}
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -44,8 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();   }
-
-
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -72,6 +74,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(SecurityConstants.SIGN_UP_URLS).permitAll() //momentaneo giusto per provare ad INSERT user
 			.antMatchers(SecurityConstants.H2_URL).permitAll() //NEL CASO IN CUI VOLESSIMO USARE H2 DB
 			.anyRequest().authenticated();
+		
+		http
+			.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		
+		
 			 
 	}
 	

@@ -1,4 +1,4 @@
-package com.projmanag.ppmtool.PayLoad;
+package com.projmanag.ppmtool.payLoad;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
