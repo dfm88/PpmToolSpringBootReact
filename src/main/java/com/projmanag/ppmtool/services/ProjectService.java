@@ -24,7 +24,19 @@ public class ProjectService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public Project saveOrUpdateProject(Project proj, String principalUserName) {		
+	public Project saveOrUpdateProject(Project proj, String principalUserName) {
+		
+		//verificare l'update del solo proprio progetto
+		//e la non possibilita di creare un progetto passando un id qualsiasi dall'update
+		if(proj.getId() != null){
+            Project existingProject = projectRepository.findByProjectIdentifier(proj.getProjectIdentifier());
+            if(existingProject !=null &&(!existingProject.getProjectLeader().equals(principalUserName))){
+                throw new ProjectNotFoundException("Project not found in your account");
+            }else if(existingProject == null){
+                throw new ProjectNotFoundException("Project with ID: '"+proj.getProjectIdentifier()+"' cannot be updated because it doesn't exist");
+            }
+        }
+		 
 		try {
 			//get the user who is creating the Project
 			User user = userRepository.findByUsername(principalUserName);
